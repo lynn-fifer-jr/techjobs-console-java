@@ -7,9 +7,7 @@ import org.apache.commons.csv.CSVRecord;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by LaunchCode
@@ -76,13 +74,15 @@ public class JobData {
 
             String aValue = row.get(column);
 
-            if (aValue.contains(value)) {
+            if (aValue.toLowerCase().contains(value.toLowerCase())) {
                 jobs.add(row);
             }
         }
 
         return jobs;
     }
+
+
 
     public static ArrayList<HashMap<String, String>> findByValue(String value){
 
@@ -92,14 +92,22 @@ public class JobData {
 
         for (HashMap<String, String> row : allJobs) {
 
-            if (row.containsValue(value)) {
-                jobs.add(row);
+            for (Map.Entry<String, String> entry: row.entrySet()) {
+
+
+                if (entry.getValue().toLowerCase().contains(value.toLowerCase())) {
+
+
+                    jobs.add(row);
+                }
             }
-        }
+
+            }
 
         return jobs;
 
     }
+
 
     /**
      * Read in data from a CSV file and store it in a list
